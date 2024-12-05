@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="theme-color" content="DodgerBlue">
+    <link rel="icon" sizes="192x192" href="">
+    <title>Online Video and Audio Player</title>
+    <style>
+        body {
+            background-image: url('bg.jpg');
+            background-size: cover;
+            color: black;
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em; /* Responsive font size */
+            font-weight: 800;
+            margin: 20px 0;
+        }
+
+        #team {
+            text-align: center;
+            font-size: 1.5em; /* Responsive font size */
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], select {
+            width: 75%;
+            max-width: 399px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 20%;
+            max-width: 100px;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: DodgerBlue;
+            color: white;
+            cursor: pointer;
+        }
+
+        #player {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: auto;
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+
+        .control-button {
+            margin: 0 5px;
+        }
+
+        .link-box {
+            text-align: center;
+            margin: 20px 0;
+            background-color: DodgerBlue;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 80%; /* Make buttons wider on small screens */
+            }
+
+            h1 {
+                font-size: 2em; /* Adjust heading size for smaller screens */
+            }
+
+            #team {
+                font-size: 1.2em; /* Adjust team size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Online Video and Audio Player</h1>
+    <div id="team">Team USS</div>
+    <div class="link-box">
+        <input type="text" placeholder="Copy your Link Here..." id="vid" name="vid" autocomplete="off" maxlength="400">
+        <button onclick="play()">Hit To Play!</button>
+    </div>
+    <br>
+    <video controls id="player" poster="poster.jpg">
+        <source id="videoSource" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <img src="logo.jpg" class="logo" id="logo" alt="Logo">
+    <div class="controls">
+        <button class="control-button" onclick="document.getElementById('player').pause()">Pause</button>
+        <button class="control-button" onclick="document.getElementById('player').play()">Play</button>
+        <button class="control-button" onclick="document.getElementById('player').currentTime -= 10">-10s</button>
+        <button class="control-button" onclick="document.getElementById('player').currentTime += 10">+10s</button>
+        <button class="control-button" onclick="mute()">Mute</button>
+        <button class="control-button" onclick="unmute()">Unmute</button>
+    </div>
+    <script>
+        function play() {
+            var qry = document.getElementById("vid").value;
+            if (!qry) {
+                alert("Enter URL First!");
+            } else {
+                var player = document.getElementById("player");
+                var source = document.getElementById("videoSource");
+                source.src = qry;
+                player.load();
+                player.play();
+                document.getElementById("logo").style.display = 'none'; // Hide logo after video starts
+            }
+        }
+
+        function mute() {
+            var player = document.getElementById("player");
+            player.muted = true;
+        }
+
+        function unmute() {
+            var player = document.getElementById("player");
+            player.muted = false;
+        }
+    </script>
+</body>
+</html>
